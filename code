@@ -1,0 +1,85 @@
+
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+struct Student {
+    int roll;
+    string name;
+    float marks;
+};
+
+vector<Student> students;
+
+void addStudent() {
+    Student s;
+    cout << "Enter Roll No: ";
+    cin >> s.roll;
+    cout << "Enter Name: ";
+    cin.ignore();
+    getline(cin, s.name);
+    cout << "Enter Marks: ";
+    cin >> s.marks;
+    students.push_back(s);
+    cout << "✅ Student Added!\n";
+}
+
+void displayStudents() {
+    if(students.empty()) {
+        cout << "No records found.\n";
+        return;
+    }
+    cout << "\n--- Student Records ---\n";
+    for(auto &s : students) {
+        cout << "Roll: " << s.roll << ", Name: " << s.name << ", Marks: " << s.marks << endl;
+    }
+}
+
+void searchStudent() {
+    int roll;
+    cout << "Enter Roll No to search: ";
+    cin >> roll;
+    for(auto &s : students) {
+        if(s.roll == roll) {
+            cout << "Found! Name: " << s.name << ", Marks: " << s.marks << endl;
+            return;
+        }
+    }
+    cout << "❌ Student not found.\n";
+}
+
+void deleteStudent() {
+    int roll;
+    cout << "Enter Roll No to delete: ";
+    cin >> roll;
+    for(auto it = students.begin(); it != students.end(); ++it) {
+        if(it->roll == roll) {
+            students.erase(it);
+            cout << "✅ Record Deleted.\n";
+            return;
+        }
+    }
+    cout << "❌ Student not found.\n";
+}
+
+int main() {
+    int choice;
+    do {
+        cout << "\n--- Student Management Menu ---\n";
+        cout << "1. Add Student\n2. Display Students\n3. Search Student\n4. Delete Student\n5. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch(choice) {
+            case 1: addStudent(); break;
+            case 2: displayStudents(); break;
+            case 3: searchStudent(); break;
+            case 4: deleteStudent(); break;
+            case 5: cout << "Exiting...\n"; break;
+            default: cout << "Invalid choice!\n";
+        }
+    } while(choice != 5);
+
+    return 0;
+}
